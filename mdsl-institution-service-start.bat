@@ -1,0 +1,9 @@
+set DB_URL=jdbc:postgresql://localhost:5432/MDSL
+set DB_USERNAME=postgres
+set DB_PASSWORD=123
+set DB_DRIVER=org.postgresql.Driver
+set DB_PROVIDER=postgresql
+set DB_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+set PORT_NUMBER=8090
+set JWT_CONFIG= {"secretKey": "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970", "expiration": "86400000", "refreshToken": {"expiration": "604800000"}}
+java -Xmx2048m -Xms256m -jar -Dspring.profiles.active=prod ./target/institution-0.0.1-SNAPSHOT.jar

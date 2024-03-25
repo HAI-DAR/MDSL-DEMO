@@ -15,6 +15,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Service class for handling user logout.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
@@ -23,6 +26,13 @@ public class LogoutService implements LogoutHandler
 
     private final TokenRepository tokenRepository;
 
+    /**
+     * Logs out a user by revoking or deleting their token.
+     *
+     * @param request        The HTTP servlet request.
+     * @param response       The HTTP servlet response.
+     * @param authentication The authentication object.
+     */
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
     {
@@ -36,12 +46,12 @@ public class LogoutService implements LogoutHandler
 	Token storedToken = tokenRepository.findByToken(jwt).orElse(null);
 	if(storedToken != null)
 	{
-	    
+
 	    // Either revoke or delete all user token based on the needed business
-	    //storedToken.setExpired(true);
-	    //storedToken.setRevoked(true);
-	    //tokenRepository.save(storedToken);
-	    
+	    // storedToken.setExpired(true);
+	    // storedToken.setRevoked(true);
+	    // tokenRepository.save(storedToken);
+
 	    User user = storedToken.getUser();
 	    tokenRepository.deleteByUser(user);
 	    SecurityContextHolder.clearContext();

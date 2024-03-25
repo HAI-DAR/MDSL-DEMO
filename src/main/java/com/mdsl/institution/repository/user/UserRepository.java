@@ -7,8 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mdsl.institution.domain.user.User;
 
-public interface UserRepository extends JpaRepository<User, BigDecimal> {
-	
-	Optional<User> findByEmail(String email); 
-	
+/**
+ * Repository interface for accessing users.
+ */
+public interface UserRepository extends JpaRepository<User, BigDecimal>
+{
+    /**
+     * Finds a user by email.
+     *
+     * @param email The email of the user.
+     * @return An optional containing the user if found, empty otherwise.
+     */
+    Optional<User> findByEmail(String email);
+
 }

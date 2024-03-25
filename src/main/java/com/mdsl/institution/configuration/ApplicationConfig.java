@@ -16,6 +16,9 @@ import com.mdsl.institution.repository.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Configuration class for configuring application beans.
+ */
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig
@@ -23,6 +26,11 @@ public class ApplicationConfig
 
     private final UserRepository repository;
 
+    /**
+     * Bean definition for UserDetailsService.
+     *
+     * @return UserDetailsService instance.
+     */
     @Bean
     UserDetailsService userDetailsService()
     {
@@ -30,6 +38,11 @@ public class ApplicationConfig
 		.orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    /**
+     * Bean definition for AuthenticationProvider.
+     *
+     * @return AuthenticationProvider instance.
+     */
     @Bean
     AuthenticationProvider authenticationProvider()
     {
@@ -38,21 +51,40 @@ public class ApplicationConfig
 	authProvider.setPasswordEncoder(passwordEncoder());
 	return authProvider;
     }
-
+    
+    
+    /**
+     * Bean definition for AuthenticationManager.
+     *
+     * @param config AuthenticationConfiguration instance.
+     * @return AuthenticationManager instance.
+     * @throws Exception if an error occurs while retrieving AuthenticationManager.
+     */
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
     {
 	return config.getAuthenticationManager();
     }
-
+    
+    /**
+     * Bean definition for PasswordEncoder.
+     *
+     * @return PasswordEncoder instance.
+     */
     @Bean
     PasswordEncoder passwordEncoder()
     {
 	return new BCryptPasswordEncoder();
     }
     
+    /**
+     * Bean definition for JavaTimeModule.
+     *
+     * @return JavaTimeModule instance.
+     */
     @Bean
-    JavaTimeModule javaTimeModule() {
-        return new JavaTimeModule();
+    JavaTimeModule javaTimeModule()
+    {
+	return new JavaTimeModule();
     }
 }

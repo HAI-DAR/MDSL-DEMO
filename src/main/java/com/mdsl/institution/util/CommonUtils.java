@@ -25,6 +25,9 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mdsl.institution.domain.common.CommonConstants;
 
+/**
+ * Utility class for common operations.
+ */
 public class CommonUtils
 {
     public static final Logger log = LoggerFactory.getLogger(CommonUtils.class);
@@ -49,16 +52,39 @@ public class CommonUtils
 	return mapper;
     }
 
+    /**
+     * Converts a map to an object of the specified class.
+     *
+     * @param map      The map to convert.
+     * @param objClass The class of the object to convert to.
+     * @param <T>      The type of the object.
+     * @return The object converted from the map.
+     */
     public static <T> T convertMapToObject(Map<String, Object> map, Class<T> objClass)
     {
 	return OBJECT_MAPPER.convertValue(map, objClass);
     }
 
+    /**
+     * Converts an object to a map.
+     *
+     * @param obj The object to convert.
+     * @return The map representation of the object.
+     */
     public static Map<String, Object> convertObjectToMap(Object obj)
     {
 	return OBJECT_MAPPER.convertValue(obj, Map.class);
     }
 
+    /**
+     * Converts the source object to the target type.
+     *
+     * @param source     The source object.
+     * @param targetType The target type to convert to.
+     * @param <T>        The type of the target.
+     * @param <U>        The type of the source.
+     * @return The converted target object.
+     */
     public static <T, U> T convert(U source, Class<T> targetType)
     {
 	T target = null;
@@ -77,6 +103,13 @@ public class CommonUtils
 	return target;
     }
 
+    /**
+     * Copies properties from the source object to the target object, including only the specified properties.
+     *
+     * @param source             The source object.
+     * @param target             The target object.
+     * @param includedProperties The properties to include in the copy.
+     */
     public static void copyPropertiesIncluding(Object source, Object target, String... includedProperties)
     {
 	BeanWrapper sourceWrapper = new BeanWrapperImpl(source);
@@ -89,6 +122,13 @@ public class CommonUtils
 	}
     }
     
+    /**
+     * Copies properties from the source object to the target object, excluding the specified properties.
+     *
+     * @param source             The source object.
+     * @param target             The target object.
+     * @param excludedProperties The properties to exclude from the copy.
+     */
     public static void copyPropertiesExcluding(Object source, Object target, String... excludedProperties) {
 	    BeanWrapper sourceWrapper = new BeanWrapperImpl(source);
 	    BeanWrapper targetWrapper = new BeanWrapperImpl(target);

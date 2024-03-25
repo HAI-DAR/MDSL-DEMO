@@ -13,6 +13,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
+/**
+ * Entity listener for entities.
+ */
 @Service
 public class MDSLEntityListener
 {
@@ -25,12 +28,25 @@ public class MDSLEntityListener
 
     private static Environment environment;
 
+    /**
+     * Executes before an entity is persisted.
+     *
+     * @param entity The entity being persisted.
+     * @throws Exception If an error occurs during pre-persist operations.
+     */
     @PrePersist
     public void prePersist(Object entity) throws Exception
     {
 	// We can implement some business here and for postPersist and other events like customized auditing
     }
 
+    /**
+     * Retrieves the column name for a property of an entity.
+     *
+     * @param entityClass The class of the entity.
+     * @param propertyName The name of the property.
+     * @return The column name of the property.
+     */
     private String getColumnName(Class<?> entityClass, String propertyName)
     {
 	try
@@ -49,6 +65,12 @@ public class MDSLEntityListener
 	return null;
     }
 
+    /**
+     * Retrieves the table name for an entity class.
+     *
+     * @param entityClass The class of the entity.
+     * @return The table name of the entity.
+     */
     private String getTableName(Class<?> entityClass)
     {
 	Table tableAnnotation = entityClass.getAnnotation(Table.class);

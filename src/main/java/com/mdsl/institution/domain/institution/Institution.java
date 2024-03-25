@@ -19,6 +19,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Entity class representing institutions.
+ */
 @Data
 @SuperBuilder
 @AllArgsConstructor
@@ -42,10 +45,16 @@ public class Institution extends BaseEntity
 
     @Column(name = "institution_code", nullable = false, length = 5)
     private String institutionCode;
-    
+
     @Column(name = "institution_name", nullable = false, length = 50)
     private String institutionName;
 
+    /**
+     * Overrides equals method.
+     *
+     * @param obj The object to compare.
+     * @return True if objects are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -59,6 +68,11 @@ public class Institution extends BaseEntity
 	return Objects.equals(institutionCode, other.institutionCode);
     }
 
+    /**
+     * Overrides hashCode method.
+     *
+     * @return The hash code value.
+     */
     @Override
     public int hashCode()
     {

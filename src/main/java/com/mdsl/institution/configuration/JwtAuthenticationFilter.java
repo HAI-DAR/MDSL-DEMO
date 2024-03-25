@@ -23,6 +23,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Filter for JWT authentication.
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter
@@ -33,13 +36,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
     private final UserService userService;
     private final TokenRepository tokenRepository;
 
+    /**
+     * Method to perform authentication based on JWT token.
+     *
+     * @param request The HTTP servlet request.
+     * @param response The HTTP servlet response.
+     * @param filterChain The filter chain.
+     * @throws ServletException If an error occurs during servlet processing.
+     * @throws IOException If an I/O error occurs during servlet processing.
+     */
     @Override
-    protected void doFilterInternal(
-	    @NonNull HttpServletRequest request,
-	    @NonNull HttpServletResponse response,
-	    @NonNull FilterChain filterChain)
-	throws ServletException,
-	IOException
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+	    @NonNull FilterChain filterChain) throws ServletException, IOException
     {
 
 	final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -62,8 +70,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
 		filterChain.doFilter(request, response);
 
 	    User user = optUser.get();
-	    user = setLoginLanguageFromHeader(user,request);
-	    
+	    user = setLoginLanguageFromHeader(user, request);
+
 	    var isTokenValid = tokenRepository.findByToken(jwt).map(t -> !t.isExpired() && !t.isRevoked())
 		    .orElse(false);
 
@@ -80,6 +88,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
 	filterChain.doFilter(request, response);
     }
 
+    /**
+     * Set the login language for the user based on the request header.
+     *
+     * @param user The user whose login language needs to be set.
+     * @param request The HTTP servlet request.
+     * @return The user object with updated login language.
+     */
     private User setLoginLanguageFromHeader(User user, HttpServletRequest request)
     {
 	String loginLanguage = request.getHeader("loginLanguage");

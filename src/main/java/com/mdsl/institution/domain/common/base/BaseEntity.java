@@ -19,6 +19,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Base class for entity classes with audit fields.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

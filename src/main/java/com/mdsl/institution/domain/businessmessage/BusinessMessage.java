@@ -1,6 +1,7 @@
 package com.mdsl.institution.domain.businessmessage;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import com.mdsl.institution.domain.common.base.BaseEntity;
 
@@ -17,6 +18,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+
+/**
+ * Entity class representing business messages.
+ */
 @Data
 @SuperBuilder
 @AllArgsConstructor
@@ -31,6 +36,13 @@ public class BusinessMessage extends BaseEntity
      */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructor with message code, title, and description.
+     *
+     * @param msgCode       The message code.
+     * @param msgTitle      The message title.
+     * @param msgDesc       The message description.
+     */
     public BusinessMessage(Integer msgCode, String msgTitle, String msgDesc)
     {
 	// Default Constructor 
@@ -57,20 +69,50 @@ public class BusinessMessage extends BaseEntity
     @Column(name = "msg_desc_en", nullable = false, length = 1000)
     private String msgDescriptionEn;
     
-    @NotNull
     @Column(name = "msg_title_ar", nullable = true, length = 255)
     private String msgTitleAr;
     
-    @NotNull
     @Column(name = "msg_desc_ar", nullable = true, length = 1000)
     private String msgDescriptionAr;
     
-    @NotNull
     @Column(name = "msg_title_fr", nullable = true, length = 255)
     private String msgTitleFr;
     
-    @NotNull
     @Column(name = "msg_desc_fr", nullable = true, length = 1000)
     private String msgDescriptionFr;
+
+    /**
+     * Overrides equals method.
+     *
+     * @param obj The object to compare.
+     * @return True if objects are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+	if(this == obj)
+	    return true;
+	if(!super.equals(obj))
+	    return false;
+	if(getClass() != obj.getClass())
+	    return false;
+	BusinessMessage other = (BusinessMessage) obj;
+	return Objects.equals(msgCode, other.msgCode);
+    }
+
+
+    /**
+     * Overrides hashCode method.
+     *
+     * @return The hash code value.
+     */
+    @Override
+    public int hashCode()
+    {
+	final int prime = 31;
+	int result = super.hashCode();
+	result = prime * result + Objects.hash(msgCode);
+	return result;
+    }
     
 }

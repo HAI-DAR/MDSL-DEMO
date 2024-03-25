@@ -22,44 +22,57 @@ public class RegisterRequest extends BaseDto
 {
     private static final long serialVersionUID = 1L;
 
-	@NotNull
+    @NotNull
     @NotBlank(message = "Field 'firstname' cannot be empty")
     private String firstname;
-    
+
     @NotNull
     @NotBlank(message = "Field 'lastname' cannot be empty")
     private String lastname;
-    
+
     @NotNull
     @NotBlank(message = "Field 'email' cannot be empty")
     @Email(message = "Email should be valid")
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
     private String email;
-    
+
     @NotNull
     @NotBlank(message = "Field 'password' cannot be empty")
     private String password;
-    
+
     @NotNull
     private UserRole role;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RegisterRequest other = (RegisterRequest) obj;
-		return Objects.equals(email, other.email);
-	}
+    /**
+     * Overrides equals method.
+     *
+     * @param obj The object to compare.
+     * @return True if objects are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+	if(this == obj)
+	    return true;
+	if(!super.equals(obj))
+	    return false;
+	if(getClass() != obj.getClass())
+	    return false;
+	RegisterRequest other = (RegisterRequest) obj;
+	return Objects.equals(email, other.email);
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(email);
-		return result;
-	}
+    /**
+     * Overrides hashCode method.
+     *
+     * @return The hash code value.
+     */
+    @Override
+    public int hashCode()
+    {
+	final int prime = 31;
+	int result = super.hashCode();
+	result = prime * result + Objects.hash(email);
+	return result;
+    }
 }

@@ -12,6 +12,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Data transfer object representing an authentication request.
+ */
 @Data
 @SuperBuilder
 @AllArgsConstructor
@@ -19,34 +22,47 @@ import lombok.experimental.SuperBuilder;
 public class AuthenticationRequest extends BaseDto
 {
     private static final long serialVersionUID = 1L;
-    
+
     @NotNull
     @NotBlank(message = "Field 'email' cannot be empty")
-    //@Email(message = "Email should be valid")
+    // @Email(message = "Email should be valid")
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
     private String email;
-    
+
     @NotNull
     @NotBlank(message = "Field 'password' cannot be empty")
     private String password;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AuthenticationRequest other = (AuthenticationRequest) obj;
-		return Objects.equals(email, other.email);
-	}
+    /**
+     * Overrides equals method.
+     *
+     * @param obj The object to compare.
+     * @return True if objects are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+	if(this == obj)
+	    return true;
+	if(!super.equals(obj))
+	    return false;
+	if(getClass() != obj.getClass())
+	    return false;
+	AuthenticationRequest other = (AuthenticationRequest) obj;
+	return Objects.equals(email, other.email);
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(email);
-		return result;
-	}
+    /**
+     * Overrides hashCode method.
+     *
+     * @return The hash code value.
+     */
+    @Override
+    public int hashCode()
+    {
+	final int prime = 31;
+	int result = super.hashCode();
+	result = prime * result + Objects.hash(email);
+	return result;
+    }
 }

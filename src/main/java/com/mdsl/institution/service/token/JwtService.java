@@ -22,36 +22,72 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+/**
+ * Service class for JWT operations.
+ */
 @Service
 public class JwtService
 {
 
     @Value("${JWT_CONFIG}")
     private String jwtSettingsString;
-    
+
     private static JwtSettings jwtSettings;
 
+    /**
+     * Extracts the username from the JWT token.
+     *
+     * @param token The JWT token.
+     * @return The extracted username.
+     */
     public String extractUsername(String token)
     {
 	return extractClaim(token, Claims::getSubject);
     }
 
+    /**
+     * Extracts a claim from the JWT token.
+     *
+     * @param token          The JWT token.
+     * @param claimsResolver The claims resolver function.
+     * @param <T>            The type of the claim.
+     * @return The extracted claim.
+     */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver)
     {
 	final Claims claims = extractAllClaims(token);
 	return claimsResolver.apply(claims);
     }
 
+    /**
+     * Generates a JWT token.
+     *
+     * @param userDetails The user details.
+     * @return The generated JWT token.
+     */
     public String generateToken(UserDetails userDetails)
     {
 	return generateToken(new HashMap<>(), userDetails);
     }
 
+    /**
+     * Generates a JWT token with extra claims.
+     *
+     * @param extraClaims  Extra claims to be added to the token.
+     * @param userDetails  The user details.
+     * @return The generated JWT token.
+     */
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails)
     {
 	return buildToken(extraClaims, userDetails, jwtSettings.getExpiration());
     }
 
+    /**
+     * Generates a refresh token.
+     *
+     * @param userDetails The user details.
+     * @return The generated refresh token.
+     */
     public String generateRefreshToken(UserDetails userDetails)
     {
 	return buildToken(new HashMap<>(), userDetails, jwtSettings.getRefreshToken().getExpiration());
@@ -65,6 +101,13 @@ public class JwtService
 		.signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
     }
 
+    /**
+     * Checks if a token is valid.
+     *
+     * @param token        The JWT token.
+     * @param userDetails  The user details.
+     * @return True if the token is valid, false otherwise.
+     */
     public boolean isTokenValid(String token, UserDetails userDetails)
     {
 	final String username = extractUsername(token);
@@ -92,6 +135,9 @@ public class JwtService
 	return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    /**
+     * Parses JWT configuration from properties.
+     */
     @Autowired
     private void parseJwtConfig() throws JsonMappingException, JsonProcessingException
     {

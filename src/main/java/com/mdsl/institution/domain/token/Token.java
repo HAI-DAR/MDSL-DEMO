@@ -26,6 +26,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Entity class representing user JWT token.
+ */
 @Data
 @SuperBuilder
 @AllArgsConstructor
@@ -33,47 +36,59 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "mdsl_tokens")
 @EntityListeners(MDSLEntityListener.class)
-public class Token extends BaseEntity {
+public class Token extends BaseEntity
+{
 
-    	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_token_id_generator")
-	@SequenceGenerator(name = "sq_token_id_generator", sequenceName = "sq_token_id", allocationSize = 1)
-	@Column(precision = 20, scale = 0)
-    	private BigDecimal id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_token_id_generator")
+    @SequenceGenerator(name = "sq_token_id_generator", sequenceName = "sq_token_id", allocationSize = 1)
+    @Column(precision = 20, scale = 0)
+    private BigDecimal id;
 
-	@Column(unique = true)
-	private String token;
+    @Column(unique = true)
+    private String token;
 
-	@Enumerated(EnumType.STRING)
-	@Builder.Default
-	private TokenType tokenType = TokenType.BEARER;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private TokenType tokenType = TokenType.BEARER;
 
-	private boolean revoked;
+    private boolean revoked;
 
-	private boolean expired;
+    private boolean expired;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-	@Override
-	public boolean equals(Object obj)
-	{
-	    if(this == obj)
-		return true;
-	    if(obj == null)
-		return false;
-	    if(getClass() != obj.getClass())
-		return false;
-	    Token other = (Token) obj;
-	    return Objects.equals(token, other.token);
-	}
+    /**
+     * Overrides equals method.
+     *
+     * @param obj The object to compare.
+     * @return True if objects are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+	if(this == obj)
+	    return true;
+	if(obj == null)
+	    return false;
+	if(getClass() != obj.getClass())
+	    return false;
+	Token other = (Token) obj;
+	return Objects.equals(token, other.token);
+    }
 
-	@Override
-	public int hashCode()
-	{
-	    return Objects.hash(token);
-	}
+    /**
+     * Overrides hashCode method.
+     *
+     * @return The hash code value.
+     */
+    @Override
+    public int hashCode()
+    {
+	return Objects.hash(token);
+    }
 }

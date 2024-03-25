@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.mdsl.institution.domain.common.LoginLanguage;
 import com.mdsl.institution.domain.common.base.BaseEntity;
+import com.mdsl.institution.domain.token.Token;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +20,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -26,12 +28,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -43,7 +45,7 @@ public class User extends BaseEntity implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_user_id_generator")
 	@SequenceGenerator(name = "sq_user_id_generator", sequenceName = "sq_user_id", allocationSize = 1)
-	@Column(precision = 20, scale = 0)
+	@Column(name = "id", precision = 20, scale = 0)
 	private BigDecimal id;
 
 	@NotNull
@@ -69,6 +71,9 @@ public class User extends BaseEntity implements UserDetails {
 	
 	@Enumerated(EnumType.STRING)
 	private LoginLanguage loginLang;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Token> tokens;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

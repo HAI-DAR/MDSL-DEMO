@@ -57,10 +57,9 @@ public class AuthenticationServiceImpl implements AuthenticationService
 		.email(request.getEmail())
 		.password(passwordEncoder.encode(request.getPassword()))
 		.role(request.getRole())
+		.createdDate(DateUtil.returnCurrentDate())
+		.recordStatus(RecordStatus.ACTIVE)
 		.build();
-	
-	user.setCreatedDate(DateUtil.returnCurrentDate());
-	user.setRecordStatus(RecordStatus.ACTIVE);
 	
 	var savedUser = userRepository.save(user);
 	var jwtToken = jwtService.generateToken(user);
@@ -115,11 +114,10 @@ public class AuthenticationServiceImpl implements AuthenticationService
 		.tokenType(TokenType.BEARER)
 		.expired(false)
 		.revoked(false)
+		.createdDate(DateUtil.returnCurrentDate())
+		.recordStatus(RecordStatus.ACTIVE)
 		.build();
-	
-	token.setCreatedDate(DateUtil.returnCurrentDate());
-	token.setRecordStatus(RecordStatus.ACTIVE);
-	
+		
 	tokenRepository.save(token);
     }
 

@@ -8,9 +8,20 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.mdsl.institution.domain.common.RecordStatus;
+import com.mdsl.institution.domain.common.base.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 @MappedSuperclass
 public class BaseDto implements Serializable {
 
@@ -43,75 +54,4 @@ public class BaseDto implements Serializable {
 
 	@Column(name = "record_status")
 	private String recordStatus;
-
-	public String getCreatedBy()
-	{
-	    return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy)
-	{
-	    this.createdBy = createdBy;
-	}
-
-	public String getModifiedBy()
-	{
-	    return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy)
-	{
-	    this.modifiedBy = modifiedBy;
-	}
-
-	public LocalDateTime getCreatedDate()
-	{
-	    return createdDate;
-	}
-
-	public void setCreatedDate(LocalDateTime createdDate)
-	{
-	    this.createdDate = createdDate;
-	}
-
-	public LocalDateTime getModifiedDate()
-	{
-	    return modifiedDate;
-	}
-
-	public void setModifiedDate(LocalDateTime modifiedDate)
-	{
-	    this.modifiedDate = modifiedDate;
-	}
-
-	public String getAuthorizedBy()
-	{
-	    return authorizedBy;
-	}
-
-	public void setAuthorizedBy(String authorizedBy)
-	{
-	    this.authorizedBy = authorizedBy;
-	}
-
-	public LocalDateTime getAuthorizedDate()
-	{
-	    return authorizedDate;
-	}
-
-	public void setAuthorizedDate(LocalDateTime authorizedDate)
-	{
-	    this.authorizedDate = authorizedDate;
-	}
-
-	public String getRecordStatus()
-	{
-	    return recordStatus;
-	}
-
-	public void setRecordStatus(String recordStatus)
-	{
-	    this.recordStatus = recordStatus;
-	}
-
 }

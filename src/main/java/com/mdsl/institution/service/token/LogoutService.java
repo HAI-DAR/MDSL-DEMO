@@ -5,7 +5,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.mdsl.institution.domain.token.Token;
+import com.mdsl.institution.domain.user.User;
 import com.mdsl.institution.repository.token.TokenRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackFor = Exception.class)
 public class LogoutService implements LogoutHandler
 {
 
@@ -29,12 +33,17 @@ public class LogoutService implements LogoutHandler
 	    return;
 	}
 	jwt = authHeader.substring(7);
-	var storedToken = tokenRepository.findByToken(jwt).orElse(null);
+	Token storedToken = tokenRepository.findByToken(jwt).orElse(null);
 	if(storedToken != null)
 	{
-	    storedToken.setExpired(true);
-	    storedToken.setRevoked(true);
-	    tokenRepository.save(storedToken);
+	    
+	    // Either revoke or delete all user token based on the needed business
+	    //storedToken.setExpired(true);
+	    //storedToken.setRevoked(true);
+	    //tokenRepository.save(storedToken);
+	    
+	    User user = storedToken.getUser();
+	    tokenRepository.deleteByUser(user);
 	    SecurityContextHolder.clearContext();
 	}
     }

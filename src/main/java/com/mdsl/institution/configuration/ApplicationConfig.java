@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mdsl.institution.repository.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,9 @@ public class ApplicationConfig
     {
 	return new BCryptPasswordEncoder();
     }
-
+    
+    @Bean
+    JavaTimeModule javaTimeModule() {
+        return new JavaTimeModule();
+    }
 }

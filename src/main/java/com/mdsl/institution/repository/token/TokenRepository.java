@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.mdsl.institution.domain.token.Token;
+import com.mdsl.institution.domain.user.User;
 
 public interface TokenRepository extends JpaRepository<Token, BigDecimal > {
 
@@ -19,4 +20,6 @@ public interface TokenRepository extends JpaRepository<Token, BigDecimal > {
 	List<Token> findAllValidTokenByUser(BigDecimal id);
 
 	Optional<Token> findByToken(String token);
+	
+	void deleteByUser(User user); 
 }

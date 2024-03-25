@@ -20,6 +20,7 @@ public class JacksonConfiguration
 	return builder -> {
 	    builder.propertyNamingStrategy(MDSLPropertyNamingStrategy.KEEP_AS_IS);
 	    builder.simpleDateFormat(CommonConstants.SIMPLE_DATE_FORMAT);
+	    //builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 	    builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(CommonConstants.SIMPLE_DATE_FORMAT)));
 	};
     }

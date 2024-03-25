@@ -1,9 +1,7 @@
 package com.mdsl.institution.api.institution;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,22 +38,6 @@ public class InstitutionController
 	    response = institutionService.update(request);
 	
 	return ResponseEntity.ok(response);
-    }
-    
-    @PostMapping("/test")
-    public ResponseEntity<Void> test() throws BaseException
-    {
-	Set<Institution> set = new HashSet<Institution>();
-	
-	Institution obj1 = Institution.builder().institutionCode("001").build();
-	Institution obj2 = Institution.builder().institutionCode("001").build();
-	
-	set.add(obj1);
-	set.add(obj2);
-	
-	set.size();
-	
-	return ResponseEntity.noContent().build();
     }
     
     @DeleteMapping("/delete/{id}")

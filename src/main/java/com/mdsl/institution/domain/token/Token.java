@@ -5,9 +5,11 @@ import java.util.Objects;
 
 import com.mdsl.institution.domain.common.base.BaseEntity;
 import com.mdsl.institution.domain.user.User;
+import com.mdsl.institution.repository.common.MDSLEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -22,13 +24,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "mdsl_tokens")
+@EntityListeners(MDSLEntityListener.class)
 public class Token extends BaseEntity {
 
     	private static final long serialVersionUID = 1L;

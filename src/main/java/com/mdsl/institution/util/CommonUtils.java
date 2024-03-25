@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mdsl.institution.domain.common.CommonConstants;
 
 public class CommonUtils
@@ -40,6 +41,7 @@ public class CommonUtils
 	mapper.setPropertyNamingStrategy(MDSLPropertyNamingStrategy.KEEP_AS_IS);
 	mapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
 	mapper.setDateFormat(df);
+	mapper.registerModule(new JavaTimeModule());
 	Version vers = Version.unknownVersion();
 	SimpleModule module = new SimpleModule("bigDecimalModule", vers);
 	module.addSerializer(BigDecimal.class, new ToStringSerializer());

@@ -2,6 +2,8 @@ package com.mdsl.institution.domain.businessmessage;
 
 import java.math.BigDecimal;
 
+import com.mdsl.institution.domain.common.base.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,19 +13,24 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "mdsl_business_messages")
-public class BusinessMessage
+public class BusinessMessage extends BaseEntity
 {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     public BusinessMessage(Integer msgCode, String msgTitle, String msgDesc)
     {
 	// Default Constructor 

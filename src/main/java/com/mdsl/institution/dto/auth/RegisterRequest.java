@@ -1,23 +1,28 @@
 package com.mdsl.institution.dto.auth;
 
+import java.util.Objects;
+
 import com.mdsl.institution.domain.user.UserRole;
+import com.mdsl.institution.dto.common.base.BaseDto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest
+public class RegisterRequest extends BaseDto
 {
-    @NotNull
+    private static final long serialVersionUID = 1L;
+
+	@NotNull
     @NotBlank(message = "Field 'firstname' cannot be empty")
     private String firstname;
     
@@ -37,4 +42,24 @@ public class RegisterRequest
     
     @NotNull
     private UserRole role;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RegisterRequest other = (RegisterRequest) obj;
+		return Objects.equals(email, other.email);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(email);
+		return result;
+	}
 }

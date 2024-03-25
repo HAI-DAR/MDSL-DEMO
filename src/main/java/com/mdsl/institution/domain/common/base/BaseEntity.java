@@ -14,7 +14,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
@@ -48,64 +56,4 @@ public class BaseEntity implements Serializable {
 	@Column(name = "record_status" , nullable = false)
 	@Enumerated(EnumType.STRING)
 	private RecordStatus recordStatus;
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public LocalDateTime getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(LocalDateTime createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public LocalDateTime getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(LocalDateTime modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public String getAuthorizedBy() {
-		return authorizedBy;
-	}
-
-	public void setAuthorizedBy(String authorizedBy) {
-		this.authorizedBy = authorizedBy;
-	}
-
-	public LocalDateTime getAuthorizedDate() {
-		return authorizedDate;
-	}
-
-	public void setAuthorizedDate(LocalDateTime authorizedDate) {
-		this.authorizedDate = authorizedDate;
-	}
-
-	public RecordStatus getRecordStatus()
-	{
-	    return recordStatus;
-	}
-
-	public void setRecordStatus(RecordStatus recordStatus)
-	{
-	    this.recordStatus = recordStatus;
-	}
-
-
 }

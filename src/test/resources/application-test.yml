@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: mdsl-institution-service
+  profiles:
+    default: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/MDSL
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update #create-drop 
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  jackson: 
+    default-property-inclusion: NON_NULL
+    property-naming-strategy: com.mdsl.institution.util.MDSLPropertyNamingStrategy$MDSLPropertyNamingKeepAsIs
+    
+       
+server:
+  servlet:
+    context-path: /api
+  port: 8090
+      
+JWT_CONFIG: {"secretKey": "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970", "expiration": "86400000", "refreshToken": {"expiration": "604800000"}}
